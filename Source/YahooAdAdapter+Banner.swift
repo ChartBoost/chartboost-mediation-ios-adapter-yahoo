@@ -8,18 +8,27 @@
 import Foundation
 import HeliumSdk
 import YahooAds
+import UIKit
 
 /// Collection of banner-sepcific API implementations
 extension YahooAdAdapter: YASInlineAdViewDelegate {
     /// Attempt to load a banner ad.
     /// - Parameters:
+    ///   - viewController: The current ViewController for ad presentation purposes.
     ///   - request: The relevant data associated with the current ad load call.
-    func loadBannerAd(request: PartnerAdLoadRequest) {
+    func loadBannerAd(viewController: UIViewController?, request: PartnerAdLoadRequest) {
+        if (viewController == nil) {
+            loadCompletion?(.failure(error(.noViewController))) ?? log(.loadResultIgnored)
+            return
+        }
+        
+        self.viewController = viewController
+        
         let adSize = YASInlineAdSize(width: UInt(request.size?.width ?? 320), height: UInt(request.size?.height ?? 50))
         let config = YASInlinePlacementConfig(placementId: request.partnerPlacement, requestMetadata: nil, adSizes: [adSize])
         
         guard let ad = YASInlineAdView(placementId: request.partnerPlacement) else {
-            loadCompletion?(.failure(self.error(.noBidPayload(request))))
+            loadCompletion?(.failure(self.error(.noBidPayload(request)))) ?? log(.loadResultIgnored)
             loadCompletion = nil
             
             return
