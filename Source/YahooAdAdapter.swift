@@ -30,7 +30,7 @@ final class YahooAdAdapter: NSObject, PartnerLogger, PartnerErrorFactory {
     let videoCompletionKey = "onVideoComplete"
     
     /// The current UIViewController for ad presentation purposes.
-    var viewController: UIViewController?
+    weak var viewController: UIViewController?
     
     /// The completion handler to notify Helium of ad load completion result.
     var loadCompletion: ((Result<PartnerAd, Error>) -> Void)?
