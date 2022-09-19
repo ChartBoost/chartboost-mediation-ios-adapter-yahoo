@@ -56,7 +56,8 @@ final class YahooAdAdapter: NSObject, PartnerLogger, PartnerErrorFactory {
     ///   - viewController: The ViewController for ad presentation purposes.
     ///   - completion: The completion handler to notify Helium of ad load completion result.
     func load(viewController: UIViewController?, completion: @escaping (Result<PartnerAd, Error>) -> Void) {
-        if (viewController == nil) {
+        /// Yahoo needs a valid ViewController for banner load calls. Other than that, fullscreen ads only need a ViewController for show calls. 
+        if (request.format == .banner && viewController == nil) {
             completion(.failure(error(.noViewController)))
             return
         }
