@@ -40,7 +40,7 @@ final class YahooAdapter: PartnerAdapter {
     func setUp(with configuration: PartnerConfiguration, completion: @escaping (Error?) -> Void) {
         log(.setUpStarted)
         
-        guard let siteId = configuration.credentials[siteIdKey], !siteId.isEmpty else {
+        guard let siteId = configuration.credentials[siteIdKey] as? String, !siteId.isEmpty else {
             let error = self.error(.setUpFailure, description: "Site ID is null or empty.")
             self.log(.setUpFailed(error))
             

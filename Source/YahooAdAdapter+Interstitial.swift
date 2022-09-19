@@ -80,7 +80,7 @@ extension YahooAdAdapter: YASInterstitialAdDelegate {
         if (eventId == videoCompletionKey) {
             let reward = Reward(amount: 0, label: "")
             log(.didReward(partnerAd, reward: reward))
-            partnerAdDelegate?.didReward(partnerAd, reward: reward)
+            partnerAdDelegate?.didReward(partnerAd, reward: reward) ?? log(.delegateUnavailable)
         }
     }
 }

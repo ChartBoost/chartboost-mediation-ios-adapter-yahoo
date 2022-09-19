@@ -13,9 +13,8 @@ import YahooAds
 extension YahooAdAdapter: YASInlineAdViewDelegate {
     /// Attempt to load a banner ad.
     /// - Parameters:
-    ///   - viewController: The ViewController for ad presentation purposes.
     ///   - request: The relevant data associated with the current ad load call.
-    func loadBannerAd(viewController: UIViewController?, request: PartnerAdLoadRequest) {
+    func loadBannerAd(request: PartnerAdLoadRequest) {
         let adSize = YASInlineAdSize(width: UInt(request.size?.width ?? 320), height: UInt(request.size?.height ?? 50))
         let config = YASInlinePlacementConfig(placementId: request.partnerPlacement, requestMetadata: nil, adSizes: [adSize])
         
@@ -50,7 +49,7 @@ extension YahooAdAdapter: YASInlineAdViewDelegate {
     }
     
     func inlineAdPresentingViewController() -> UIViewController? {
-        /// NO-OP
+        return self.viewController
     }
     
     func inlineAd(_ inlineAd: YASInlineAdView, event eventId: String, source: String, arguments: [String : Any]) {

@@ -12,16 +12,10 @@ import YahooAds
 public class YahooAdapterConfiguration {
     /// Flag that can optionally be set to enable Yahoo's verbose logging.
     /// Disabled by default.
-    private static var _verboseLogging = false
-    public static var verboseLogging: Bool {
-        get {
-            return _verboseLogging
-        }
-        set {
-            _verboseLogging = newValue
-            YASAds.logLevel = _verboseLogging ? YASLogLevel.verbose : YASLogLevel.info
-            
-            print("The Yahoo Mobile SDK's verbose logging is \(_verboseLogging ? "enabled" : "disabled").")
+    public static var verboseLogging: Bool = false {
+        didSet {
+            YASAds.logLevel = verboseLogging ? YASLogLevel.verbose : YASLogLevel.info
+            print("The Yahoo Mobile SDK's verbose logging is \(verboseLogging ? "enabled" : "disabled").")
         }
     }
 }

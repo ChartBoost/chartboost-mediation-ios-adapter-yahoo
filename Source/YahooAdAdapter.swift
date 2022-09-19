@@ -23,11 +23,14 @@ final class YahooAdAdapter: NSObject, PartnerLogger, PartnerErrorFactory {
     /// The partner ad delegate to send ad life-cycle events to.
     weak var partnerAdDelegate: PartnerAdDelegate?
     
-    /// The key name for the impression event
+    /// The key name for the impression event.
     let impressionKey = "adImpression"
     
-    /// The key name for the video completion event
+    /// The key name for the video completion event.
     let videoCompletionKey = "onVideoComplete"
+    
+    /// The current UIViewController for ad presentation purposes.
+    var viewController: UIViewController?
     
     /// The completion handler to notify Helium of ad load completion result.
     var loadCompletion: ((Result<PartnerAd, Error>) -> Void)?
@@ -53,6 +56,13 @@ final class YahooAdAdapter: NSObject, PartnerLogger, PartnerErrorFactory {
     ///   - viewController: The ViewController for ad presentation purposes.
     ///   - completion: The completion handler to notify Helium of ad load completion result.
     func load(viewController: UIViewController?, completion: @escaping (Result<PartnerAd, Error>) -> Void) {
+        if (viewController == nil) {
+            completion(.failure(error(.noViewController)))
+            return
+        }
+        
+        self.viewController = viewController
+        
         loadCompletion = { [weak self] result in
             if let self = self {
                 do {
@@ -68,7 +78,7 @@ final class YahooAdAdapter: NSObject, PartnerLogger, PartnerErrorFactory {
         
         switch request.format {
         case .banner:
-            loadBannerAd(viewController: viewController, request: request)
+            loadBannerAd(request: request)
         case .interstitial, .rewarded:
             loadFullscreenAd(request: request)
         }
