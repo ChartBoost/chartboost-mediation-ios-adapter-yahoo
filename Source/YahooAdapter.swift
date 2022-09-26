@@ -87,10 +87,10 @@ final class YahooAdapter: PartnerAdapter {
     /// - Parameter isSubject: True if the user is subject to COPPA, false otherwise.
     func setUserSubjectToCOPPA(_ isSubject: Bool) {
         if (isSubject) {
-            log(.setCOPPAConsent(isSubject))
+            log(.privacyUpdated(setting: "COPPA", value: "applied"))
             YASAds.sharedInstance.applyCoppa()
         } else {
-            log("YASAds does not support un-setting COPPA")
+            log("YASAds does not support setting COPPA to false")
         }
     }
     
@@ -99,12 +99,11 @@ final class YahooAdapter: PartnerAdapter {
     ///   - hasGivenConsent: True if the user has given CCPA consent, false otherwise.
     ///   - privacyString: The CCPA privacy String.
     func setCCPAConsent(hasGivenConsent: Bool, privacyString: String?) {
-        log(.setCCPAConsent(hasGivenConsent))
         guard let privacyString = privacyString, !privacyString.isEmpty else {
             log("Privacy string was empty, CCPA consent setting was not changed")
             return
         }
-        
+        log(.privacyUpdated(setting: "YASCcpaConsent consentString", value: privacyString))
         YASAds.sharedInstance.add(YASCcpaConsent(consentString: privacyString))
     }
     
