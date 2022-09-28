@@ -72,7 +72,10 @@ final class YahooAdapter: PartnerAdapter {
     /// - Parameter applies: true if GDPR applies, false otherwise.
     func setGDPRApplies(_ applies: Bool) {
         if (applies) {
+            log(.privacyUpdated(setting: "GDPR", value: "applied"))
             YASAds.sharedInstance.applyGdpr()
+        } else {
+            log("YASAds does not support setting applyGDPR to false")
         }
     }
     
@@ -90,7 +93,7 @@ final class YahooAdapter: PartnerAdapter {
             log(.privacyUpdated(setting: "COPPA", value: "applied"))
             YASAds.sharedInstance.applyCoppa()
         } else {
-            log("YASAds does not support setting COPPA to false")
+            log("YASAds does not support setting applyCOPPA to false")
         }
     }
     
