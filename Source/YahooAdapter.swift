@@ -72,7 +72,10 @@ final class YahooAdapter: PartnerAdapter {
     /// - Parameter applies: true if GDPR applies, false otherwise.
     func setGDPRApplies(_ applies: Bool) {
         if (applies) {
+            log(.privacyUpdated(setting: "GDPR", value: "applied"))
             YASAds.sharedInstance.applyGdpr()
+        } else {
+            log("YASAds does not support setting applyGDPR to false")
         }
     }
     
@@ -80,13 +83,17 @@ final class YahooAdapter: PartnerAdapter {
     /// - Parameter status: The user's current GDPR consent status.
     func setGDPRConsentStatus(_ status: GDPRConsentStatus) {
         // NO-OP as Helium does not support the TCF consent string.
+        log("Helium does not offer IAB Consent String support so YASAds will use its default value")
     }
     
     /// Override this method to notify your partner SDK of the COPPA subjectivity as determined by the Helium SDK.
     /// - Parameter isSubject: True if the user is subject to COPPA, false otherwise.
     func setUserSubjectToCOPPA(_ isSubject: Bool) {
         if (isSubject) {
-            YASAds.sharedInstance.applyCcpa()
+            log(.privacyUpdated(setting: "COPPA", value: "applied"))
+            YASAds.sharedInstance.applyCoppa()
+        } else {
+            log("YASAds does not support setting applyCOPPA to false")
         }
     }
     
@@ -96,9 +103,10 @@ final class YahooAdapter: PartnerAdapter {
     ///   - privacyString: The CCPA privacy String.
     func setCCPAConsent(hasGivenConsent: Bool, privacyString: String?) {
         guard let privacyString = privacyString, !privacyString.isEmpty else {
+            log("Privacy string was empty, CCPA consent setting was not changed")
             return
         }
-        
+        log(.privacyUpdated(setting: "YASCcpaConsent consentString", value: privacyString))
         YASAds.sharedInstance.add(YASCcpaConsent(consentString: privacyString))
     }
     
