@@ -43,7 +43,10 @@ final class YahooAdapterFullscreenAd: YahooAdapterAd, PartnerAd {
         
         if let ad = ad {
             showCompletion = completion
-            ad.show(from: viewController)
+            // InMobi makes use of UI-related APIs directly from the thread show() is called, so we need to do it on the main thread
+            DispatchQueue.main.async {
+                ad.show(from: viewController)
+            }
         } else {
             let error = error(.noAdReadyToShow)
             log(.showFailed(error))

@@ -34,22 +34,25 @@ final class YahooAdapterBannerAd: YahooAdapterAd, PartnerAd {
         
         self.viewController = viewController
         
-        let adSize = YASInlineAdSize(
-            width: UInt(request.size?.width ?? IABStandardAdSize.width),
-            height: UInt(request.size?.height ?? IABStandardAdSize.height)
-        )
-        let config = YASInlinePlacementConfig(placementId: request.partnerPlacement, requestMetadata: nil, adSizes: [adSize])
-        
-        guard let ad = YASInlineAdView(placementId: request.partnerPlacement) else {
-            let error = error(.loadFailure, description: "Failed to create YASInlineAdView")
-            log(.loadFailed(error))
-            return completion(.failure(error))
+        // InMobi banner inherits from UIView so we need to instantiate it on the main thread
+        DispatchQueue.main.async { [self] in
+            let adSize = YASInlineAdSize(
+                width: UInt(request.size?.width ?? IABStandardAdSize.width),
+                height: UInt(request.size?.height ?? IABStandardAdSize.height)
+            )
+            let config = YASInlinePlacementConfig(placementId: request.partnerPlacement, requestMetadata: nil, adSizes: [adSize])
+            
+            guard let ad = YASInlineAdView(placementId: request.partnerPlacement) else {
+                let error = error(.loadFailure, description: "Failed to create YASInlineAdView")
+                log(.loadFailed(error))
+                return completion(.failure(error))
+            }
+            
+            loadCompletion = completion
+            inlineView = ad
+            ad.delegate = self
+            ad.load(with: config)
         }
-        
-        loadCompletion = completion
-        inlineView = ad
-        ad.delegate = self
-        ad.load(with: config)
     }
     
     /// Shows a loaded ad.
