@@ -61,21 +61,17 @@ final class YahooAdapter: PartnerAdapter {
         completion(nil)
     }
     
-    /// Indicates if GDPR applies or not.
-    /// - parameter applies: `true` if GDPR applies, `false` otherwise.
-    func setGDPRApplies(_ applies: Bool) {
-        if (applies) {
+    /// Indicates if GDPR applies or not and the user's GDPR consent status.
+    /// - parameter applies: `true` if GDPR applies, `false` if not, `nil` if the publisher has not provided this information.
+    /// - parameter status: One of the `GDPRConsentStatus` values depending on the user's preference.
+    func setGDPR(applies: Bool?, status: GDPRConsentStatus) {
+        if applies == true {
             YASAds.sharedInstance.applyGdpr()
             log(.privacyUpdated(setting: "GDPR", value: "applied"))
         } else {
             // YASAds does not support setting applyGDPR to false
         }
-    }
-    
-    /// Indicates the user's GDPR consent status.
-    /// - parameter status: One of the `GDPRConsentStatus` values depending on the user's preference.
-    func setGDPRConsentStatus(_ status: GDPRConsentStatus) {
-        // NO-OP as Helium does not support the TCF consent string.
+        // status is NO-OP as Helium does not support the TCF consent string.
     }
     
     /// Indicates if the user is subject to COPPA or not.
