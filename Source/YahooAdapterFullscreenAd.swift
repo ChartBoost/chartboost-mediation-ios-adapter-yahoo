@@ -96,7 +96,7 @@ extension YahooAdapterFullscreenAd: YASInterstitialAdDelegate {
     }
     
     func interstitialAdDidLeaveApplication(_ interstitialAd: YASInterstitialAd) {
-        log("interstitialAdDidLeaveApplication")
+        log(.delegateCallIgnored)
     }
     
     func interstitialAdEvent(_ interstitialAd: YASInterstitialAd, source: String, eventId: String, arguments: [String : Any]?) {
