@@ -13,17 +13,17 @@ import UIKit
 /// The Helium Yahoo adapter.
 final class YahooAdapter: PartnerAdapter {
     
-    /// The version of the partner SDK, e.g. "5.13.2"
+    /// The version of the partner SDK.
     let partnerSDKVersion = kYASSDKVersionKey
     
-    /// The version of the adapter, e.g. "2.5.13.2.0"
-    /// The first number is Helium SDK's major version. The next 3 numbers are the partner SDK version. The last number is the build version of the adapter.
+    /// The version of the adapter.
+    /// The first digit is Helium SDK's major version. The last digit is the build version of the adapter. The intermediate digits correspond to the partner SDK version.
     let adapterVersion = "4.1.1.0.0"
     
-    /// The partner's identifier.
+    /// The partner's unique identifier.
     let partnerIdentifier = "yahoo"
     
-    /// The partner's name in a human-friendly version.
+    /// The human-friendly partner name.
     let partnerDisplayName = "Yahoo"
     
     /// The designated initializer for the adapter.
@@ -89,9 +89,9 @@ final class YahooAdapter: PartnerAdapter {
         }
     }
     
-    /// Indicates the CCPA status both as a boolean and as a IAB US privacy string.
+    /// Indicates the CCPA status both as a boolean and as an IAB US privacy string.
     /// - parameter hasGivenConsent: A boolean indicating if the user has given consent.
-    /// - parameter privacyString: A IAB-compliant string indicating the CCPA status.
+    /// - parameter privacyString: An IAB-compliant string indicating the CCPA status.
     func setCCPAConsent(hasGivenConsent: Bool, privacyString: String?) {
         guard let privacyString = privacyString, !privacyString.isEmpty else {
             log("Privacy string was empty, CCPA consent setting was not changed")
@@ -105,7 +105,7 @@ final class YahooAdapter: PartnerAdapter {
     /// Helium SDK calls this method to create a new ad for each new load request. Ad instances are never reused.
     /// Helium SDK takes care of storing and disposing of ad instances so you don't need to.
     /// `invalidate()` is called on ads before disposing of them in case partners need to perform any custom logic before the object gets destroyed.
-    /// If for some reason a new ad cannot be provided an error should be thrown.
+    /// If, for some reason, a new ad cannot be provided, an error should be thrown.
     /// - parameter request: Information about the ad load request.
     /// - parameter delegate: The delegate that will receive ad life-cycle notifications.
     func makeAd(request: PartnerAdLoadRequest, delegate: PartnerAdDelegate) throws -> PartnerAd {
