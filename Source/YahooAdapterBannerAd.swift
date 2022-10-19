@@ -83,7 +83,7 @@ extension YahooAdapterBannerAd: YASInlineAdViewDelegate {
     
     func inlineAdDidFail(_ inlineAd: YASInlineAdView, withError errorInfo: YASErrorInfo) {
         /// Banner ads do not have a separate "show" mechanism so we will only log this event.
-        log("inlineAdDidFail for placement \(inlineAd.placementId) and error \(errorInfo.description)")
+        log(.delegateCallIgnored)
     }
     
     func inlineAdPresentingViewController() -> UIViewController? {
@@ -98,11 +98,11 @@ extension YahooAdapterBannerAd: YASInlineAdViewDelegate {
     }
     
     func inlineAdDidExpand(_ inlineAd: YASInlineAdView) {
-        log("inlineAdDidExpand for placement \(inlineAd.placementId).")
+        log(.delegateCallIgnored)
     }
     
     func inlineAdDidCollapse(_ inlineAd: YASInlineAdView) {
-        log("inlineAdDidCollapse for placement \(inlineAd.placementId).")
+        log(.delegateCallIgnored)
     }
     
     func inlineAdClicked(_ inlineAd: YASInlineAdView) {
@@ -111,14 +111,14 @@ extension YahooAdapterBannerAd: YASInlineAdViewDelegate {
     }
     
     func inlineAdDidLeaveApplication(_ inlineAd: YASInlineAdView) {
-        log("inlineAdDidLeaveApplication for placement \(inlineAd.placementId).")
+        log(.delegateCallIgnored)
     }
     
     func inlineAdDidResize(_ inlineAd: YASInlineAdView) {
-        log("inlineAdDidResize for placement \(inlineAd.placementId).")
+        log(.delegateCallIgnored)
     }
     
     func inlineAdDidRefresh(_ inlineAd: YASInlineAdView) {
-        log("inlineAdDidRefresh for placement \(inlineAd.placementId).")
+        log(.delegateCallIgnored)
     }
 }
