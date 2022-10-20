@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name        = 'ChartboostHeliumAdapterYahoo'
-  spec.version     = '4.1.1.0.0'
+  spec.version     = '4.1.1.0.0.0'
   spec.license     = { :type => 'MIT', :file => 'LICENSE.md' }
   spec.homepage    = 'https://github.com/ChartBoost/helium-ios-adapter-yahoo'
   spec.authors     = { 'Chartboost' => 'https://www.chartboost.com/' }
