@@ -75,9 +75,9 @@ final class YahooAdapter: PartnerAdapter {
     }
     
     /// Indicates if the user is subject to COPPA or not.
-    /// - parameter isSubject: `true` if the user is subject, `false` otherwise.
-    func setUserSubjectToCOPPA(_ isSubject: Bool) {
-        if (isSubject) {
+    /// - parameter isChildDirected: `true` if the user is subject to COPPA, `false` otherwise.
+    func setCOPPA(isChildDirected: Bool) {
+        if (isChildDirected) {
             YASAds.sharedInstance.applyCoppa()
             log(.privacyUpdated(setting: "COPPA", value: "applied"))
         } else {
@@ -88,11 +88,7 @@ final class YahooAdapter: PartnerAdapter {
     /// Indicates the CCPA status both as a boolean and as an IAB US privacy string.
     /// - parameter hasGivenConsent: A boolean indicating if the user has given consent.
     /// - parameter privacyString: An IAB-compliant string indicating the CCPA status.
-    func setCCPAConsent(hasGivenConsent: Bool, privacyString: String?) {
-        guard let privacyString = privacyString, !privacyString.isEmpty else {
-            log("Privacy string was empty, CCPA consent setting was not changed")
-            return
-        }
+    func setCCPA(hasGivenConsent: Bool, privacyString: String) {
         YASAds.sharedInstance.add(YASCcpaConsent(consentString: privacyString))
         log(.privacyUpdated(setting: "YASCcpaConsent", value: privacyString))
     }
