@@ -24,6 +24,7 @@ Pod::Spec.new do |spec|
 
   # Partner network SDK and version that this adapter is certified to work with.
   spec.dependency 'Yahoo-Mobile-SDK', '1.1.0'
+  spec.dependency 'Flurry-iOS-SDK', '12.1.1'  # Version 12.1.3 causes "Undefined symbol" errors at build time, and there is no v12.1.2
   
   # The partner network SDK is a static framework which requires the static_framework option.
   spec.static_framework = true
