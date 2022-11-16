@@ -14,7 +14,7 @@ import UIKit
 final class YahooAdapter: PartnerAdapter {
     
     /// The version of the partner SDK.
-    let partnerSDKVersion = kYASSDKVersionKey
+    let partnerSDKVersion: String = YASAds.sdkInfo.version
     
     /// The version of the adapter.
     /// It should have 6 digits separated by periods, where the first digit is Helium SDK's major version, the last digit is the adapter's build version, and intermediate digits are the partner SDK's version.
