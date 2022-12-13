@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name        = 'ChartboostHeliumAdapterYahoo'
-  spec.version     = '4.1.1.0.0'
+  spec.version     = '4.1.3.0.0'
   spec.license     = { :type => 'MIT', :file => 'LICENSE.md' }
   spec.homepage    = 'https://github.com/ChartBoost/helium-ios-adapter-yahoo'
   spec.authors     = { 'Chartboost' => 'https://www.chartboost.com/' }
@@ -14,7 +14,7 @@ Pod::Spec.new do |spec|
 
   # Minimum supported versions
   spec.swift_version         = '5.0'
-  spec.ios.deployment_target = '10.0'
+  spec.ios.deployment_target = '11.0'
 
   # System frameworks used
   spec.ios.frameworks = ['Foundation', 'SafariServices', 'UIKit', 'WebKit']
@@ -23,7 +23,7 @@ Pod::Spec.new do |spec|
   spec.dependency 'ChartboostHelium', '~> 4.0'
 
   # Partner network SDK and version that this adapter is certified to work with.
-  spec.dependency 'Yahoo-Mobile-SDK', '1.1.0'
+  spec.dependency 'Yahoo-Mobile-SDK', '1.3.0'
   
   # The partner network SDK is a static framework which requires the static_framework option.
   spec.static_framework = true
