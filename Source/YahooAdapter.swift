@@ -107,6 +107,8 @@ final class YahooAdapter: PartnerAdapter {
             return YahooAdapterFullscreenAd(adapter: self, request: request, delegate: delegate)
         case .banner:
             return YahooAdapterBannerAd(adapter: self, request: request, delegate: delegate)
+        @unknown default:
+            throw error(.adFormatNotSupported(request))
         }
     }
 }
