@@ -9,13 +9,14 @@ import Foundation
 import YahooAds
 
 /// A list of externally configurable properties pertaining to the partner SDK that can be retrieved and set by publishers.
-public class YahooAdapterConfiguration {
+@objc public class YahooAdapterConfiguration: NSObject {
+    
     /// Flag that can optionally be set to enable Yahoo's verbose logging.
     /// Disabled by default.
-    public static var verboseLogging: Bool = false {
+    @objc public static var verboseLogging: Bool = false {
         didSet {
-            YASAds.logLevel = verboseLogging ? YASLogLevel.verbose : YASLogLevel.info
-            print("The Yahoo Mobile SDK's verbose logging is \(verboseLogging ? "enabled" : "disabled").")
+            YASAds.logLevel = verboseLogging ? .verbose : .info
+            print("Yahoo SDK verbose logging set to \(verboseLogging)")
         }
     }
 }
