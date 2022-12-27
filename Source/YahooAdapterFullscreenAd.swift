@@ -45,7 +45,7 @@ final class YahooAdapterFullscreenAd: YahooAdapterAd, PartnerAd {
             showCompletion = completion
             ad.show(from: viewController)
         } else {
-            let error = error(.noAdReadyToShow)
+            let error = error(.showFailureAdNotReady)
             log(.showFailed(error))
             completion(.failure(error))
         }
@@ -63,14 +63,14 @@ extension YahooAdapterFullscreenAd: YASInterstitialAdDelegate {
     }
     
     func interstitialAdLoadDidFail(_ interstitialAd: YASInterstitialAd, withError errorInfo: YASErrorInfo) {
-        let error = error(.loadFailure, error: errorInfo)
+        let error = error(.loadFailureException, error: errorInfo)
         log(.loadFailed(error))
         loadCompletion?(.failure(error)) ?? log(.loadResultIgnored)
         loadCompletion = nil
     }
     
     func interstitialAdDidFail(_ interstitialAd: YASInterstitialAd, withError errorInfo: YASErrorInfo) {
-        let error = error(.showFailure, error: errorInfo)
+        let error = error(.showFailureException, error: errorInfo)
         log(.showFailed(error))
         showCompletion?(.failure(error)) ?? log(.showResultIgnored)
         showCompletion = nil
