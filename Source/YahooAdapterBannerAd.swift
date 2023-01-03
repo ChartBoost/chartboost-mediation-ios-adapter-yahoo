@@ -72,7 +72,7 @@ extension YahooAdapterBannerAd: YASInlineAdViewDelegate {
     }
     
     func inlineAdLoadDidFail(_ inlineAd: YASInlineAdView, withError errorInfo: YASErrorInfo) {
-        let error = error(.loadFailureException, error: errorInfo)
+        let error = error(.loadFailureUnknown, error: errorInfo)
         log(.loadFailed(error))
         loadCompletion?(.failure(error)) ?? log(.loadResultIgnored)
         loadCompletion = nil

@@ -54,7 +54,7 @@ final class YahooAdapter: PartnerAdapter {
                 completion(nil)
             }
             else {
-                let error = self.error(.initializationFailurePartnerNotIntegrated)
+                let error = self.error(.initializationFailureUnknown)
                 self.log(.setUpFailed(error))
                 completion(error)
             }

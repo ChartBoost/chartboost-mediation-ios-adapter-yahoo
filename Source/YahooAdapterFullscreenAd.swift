@@ -63,14 +63,14 @@ extension YahooAdapterFullscreenAd: YASInterstitialAdDelegate {
     }
     
     func interstitialAdLoadDidFail(_ interstitialAd: YASInterstitialAd, withError errorInfo: YASErrorInfo) {
-        let error = error(.loadFailureException, error: errorInfo)
+        let error = error(.loadFailureUnknown, error: errorInfo)
         log(.loadFailed(error))
         loadCompletion?(.failure(error)) ?? log(.loadResultIgnored)
         loadCompletion = nil
     }
     
     func interstitialAdDidFail(_ interstitialAd: YASInterstitialAd, withError errorInfo: YASErrorInfo) {
-        let error = error(.showFailureException, error: errorInfo)
+        let error = error(.showFailureUnknown, error: errorInfo)
         log(.showFailed(error))
         showCompletion?(.failure(error)) ?? log(.showResultIgnored)
         showCompletion = nil
