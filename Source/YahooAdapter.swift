@@ -40,7 +40,7 @@ final class YahooAdapter: PartnerAdapter {
         log(.setUpStarted)
         
         guard let siteId = configuration.siteID, !siteId.isEmpty else {
-            let error = error(.missingSetUpParameter(key: .siteIDKey))
+            let error = error(.initializationFailureInvalidCredentials, description: "Missing \(String.siteIDKey)")
             log(.setUpFailed(error))
             completion(error)
             return
@@ -49,9 +49,15 @@ final class YahooAdapter: PartnerAdapter {
         // Yahoo's initialization needs to be done on the main thread
         DispatchQueue.main.async {
             let succeeded = YASAds.initialize(withSiteId: siteId)
-            
-            self.log(succeeded ? .setUpSucceded : .setUpFailed(self.error(.setUpFailure)))
-            completion(succeeded ? nil : self.error(.setUpFailure))
+            if succeeded {
+                self.log(.setUpSucceded)
+                completion(nil)
+            }
+            else {
+                let error = self.error(.initializationFailureUnknown)
+                self.log(.setUpFailed(error))
+                completion(error)
+            }
         }
     }
     
@@ -108,7 +114,7 @@ final class YahooAdapter: PartnerAdapter {
         case .banner:
             return YahooAdapterBannerAd(adapter: self, request: request, delegate: delegate)
         @unknown default:
-            throw error(.adFormatNotSupported(request))
+            throw error(.loadFailureUnsupportedAdFormat)
         }
     }
 }

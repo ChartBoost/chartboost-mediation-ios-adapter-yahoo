@@ -27,7 +27,7 @@ final class YahooAdapterBannerAd: YahooAdapterAd, PartnerAd {
         log(.loadStarted)
         
         guard let viewController = viewController else {
-            let error = error(.noViewController)
+            let error = error(.showFailureViewControllerNotFound)
             log(.loadFailed(error))
             return completion(.failure(error))
         }
@@ -41,7 +41,7 @@ final class YahooAdapterBannerAd: YahooAdapterAd, PartnerAd {
         let config = YASInlinePlacementConfig(placementId: request.partnerPlacement, requestMetadata: nil, adSizes: [adSize])
         
         guard let ad = YASInlineAdView(placementId: request.partnerPlacement) else {
-            let error = error(.loadFailure, description: "Failed to create YASInlineAdView")
+            let error = error(.loadFailureNoInlineView, description: "Failed to create YASInlineAdView")
             log(.loadFailed(error))
             return completion(.failure(error))
         }
@@ -72,7 +72,7 @@ extension YahooAdapterBannerAd: YASInlineAdViewDelegate {
     }
     
     func inlineAdLoadDidFail(_ inlineAd: YASInlineAdView, withError errorInfo: YASErrorInfo) {
-        let error = error(.loadFailure, error: errorInfo)
+        let error = error(.loadFailureUnknown, error: errorInfo)
         log(.loadFailed(error))
         loadCompletion?(.failure(error)) ?? log(.loadResultIgnored)
         loadCompletion = nil
