@@ -72,9 +72,8 @@ extension YahooAdapterBannerAd: YASInlineAdViewDelegate {
     }
     
     func inlineAdLoadDidFail(_ inlineAd: YASInlineAdView, withError errorInfo: YASErrorInfo) {
-        let error = error(.loadFailureUnknown, error: errorInfo)
-        log(.loadFailed(error))
-        loadCompletion?(.failure(error)) ?? log(.loadResultIgnored)
+        log(.loadFailed(errorInfo))
+        loadCompletion?(.failure(errorInfo)) ?? log(.loadResultIgnored)
         loadCompletion = nil
     }
     
