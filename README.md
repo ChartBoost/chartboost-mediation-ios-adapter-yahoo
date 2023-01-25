@@ -1,6 +1,6 @@
 # Chartboost Mediation Yahoo Adapter
 
-The Chartboost Mediation Yahoo adapter mediates the Yahoo SDK into the Chartboost Mediation SDK.
+The Chartboost Mediation Yahoo adapter mediates Yahoo via the Chartboost Mediation SDK.
 
 ## Minimum Requirements
 
