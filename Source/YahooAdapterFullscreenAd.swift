@@ -5,7 +5,7 @@
 
 //
 //  YahooAdapterFullscreenAd.swift
-//  ChartboostHeliumAdapterYahoo
+//  ChartboostMediationAdapterYahoo
 //
 //  Created by Vu Chau on 9/13/22.
 //
@@ -14,7 +14,7 @@ import ChartboostMediationSDK
 import Foundation
 import YahooAds
 
-/// The Helium Yahoo adapter fullscreen ad.
+/// The Chartboost Mediation Yahoo adapter fullscreen ad.
 final class YahooAdapterFullscreenAd: YahooAdapterAd, PartnerAd {
     
     /// The partner ad view to display inline. E.g. a banner view.

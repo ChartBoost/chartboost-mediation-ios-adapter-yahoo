@@ -5,7 +5,7 @@
 
 //
 //  YahooAdapterAd.swift
-//  ChartboostHeliumAdapterYahoo
+//  ChartboostMediationAdapterYahoo
 //
 //  Created by Vu Chau on 9/13/22.
 //
@@ -15,7 +15,7 @@ import Foundation
 import UIKit
 import YahooAds
 
-/// Base class for Helium Yahoo adapter ads.
+/// Base class for Chartboost Mediation Yahoo adapter ads.
 class YahooAdapterAd: NSObject {
     
     /// The partner adapter that created this ad.

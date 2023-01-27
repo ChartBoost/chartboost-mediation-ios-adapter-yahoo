@@ -5,7 +5,7 @@
 
 //
 //  YahooAdapterBannerAd.swift
-//  ChartboostHeliumAdapterYahoo
+//  ChartboostMediationAdapterYahoo
 //
 //  Created by Vu Chau on 9/13/22.
 //
@@ -15,7 +15,7 @@ import Foundation
 import UIKit
 import YahooAds
 
-/// The Helium Yahoo adapter banner ad.
+/// The Chartboost Mediation Yahoo adapter banner ad.
 final class YahooAdapterBannerAd: YahooAdapterAd, PartnerAd {
     
     /// The partner ad view to display inline. E.g. a banner view.

@@ -5,7 +5,7 @@
 
 //
 //  YahooAdapterConfiguration.swift
-//  ChartboostHeliumAdapterYahoo
+//  ChartboostMediationAdapterYahoo
 //
 //  Created by Vu Chau on 9/13/22.
 //
