@@ -57,8 +57,7 @@ final class YahooAdapter: PartnerAdapter {
             if succeeded {
                 self.log(.setUpSucceded)
                 completion(nil)
-            }
-            else {
+            } else {
                 let error = self.error(.initializationFailureUnknown)
                 self.log(.setUpFailed(error))
                 completion(error)
@@ -120,6 +119,62 @@ final class YahooAdapter: PartnerAdapter {
             return YahooAdapterBannerAd(adapter: self, request: request, delegate: delegate)
         @unknown default:
             throw error(.loadFailureUnsupportedAdFormat)
+        }
+    }
+    
+    /// Maps a partner load error to a Helium error code.
+    /// Helium SDK calls this method when a load completion is called with a partner error.
+    ///
+    /// A default implementation is provided that returns `nil`.
+    /// Only implement if the partner SDK provides its own list of error codes that can be mapped to Helium's.
+    /// If some case cannot be mapped return `nil` to let Helium choose a default error code.
+    func mapLoadError(_ error: Error) -> HeliumError.Code? {
+        switch (error as NSError).domain {
+        case kYASCoreErrorDomain:
+            guard let code = YASCoreError(rawValue: (error as NSError).code) else {
+                return nil
+            }
+            switch code {
+            case .adNotAvailable:
+                return .loadFailureNoFill
+            case .timeout:
+                return .loadFailureTimeout
+            case .unexpectedServerError:
+                return .loadFailureServerError
+            case .badServerResponseCode:
+                return .loadFailureServerError
+            case .emptyExchangeServerResponse:
+                return .loadFailureServerError
+            case .sdkNotInitialized:
+                return .loadFailurePartnerNotInitialized
+            case .notImplemented,
+                    .adAdapterNotFound,
+                    .adFetchFailure,
+                    .adPrepareFailure,
+                    .waterfallFailure,
+                    .pluginNotEnabled,
+                    .adFetchFailureApplicationInBackground,
+                    .placementConfigNotAvailable:
+                return .loadFailureUnknown
+            @unknown default:
+                return nil
+            }
+        case kYASSupportErrorDomain:
+            guard let code = YASSupportError(rawValue: (error as NSError).code) else {
+                return nil
+            }
+            switch code {
+            case .timeout:
+                return .loadFailureTimeout
+            case .loadingResources:
+                return .loadFailureUnknown
+            case .abort:
+                return .loadFailureAborted
+            @unknown default:
+                return nil
+            }
+        default:
+            return nil
         }
     }
 }
