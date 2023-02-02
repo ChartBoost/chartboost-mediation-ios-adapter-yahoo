@@ -1,14 +1,7 @@
 // Copyright 2022-2023 Chartboost, Inc.
-// 
+//
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file.
-
-//
-//  YahooAdapterConfiguration.swift
-//  ChartboostMediationAdapterYahoo
-//
-//  Created by Vu Chau on 9/13/22.
-//
 
 import Foundation
 import YahooAds
