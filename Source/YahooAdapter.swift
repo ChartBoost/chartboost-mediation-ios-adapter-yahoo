@@ -69,6 +69,7 @@ final class YahooAdapter: PartnerAdapter {
     /// - parameter applies: `true` if GDPR applies, `false` if not, `nil` if the publisher has not provided this information.
     /// - parameter status: One of the `GDPRConsentStatus` values depending on the user's preference.
     func setGDPR(applies: Bool?, status: GDPRConsentStatus) {
+        // See https://sdk.yahooinc.com/yahoo-ads/publisher-privacy.html
         if applies == true {
             YASAds.sharedInstance.applyGdpr()
             log(.privacyUpdated(setting: "GDPR", value: "applied"))
@@ -81,6 +82,7 @@ final class YahooAdapter: PartnerAdapter {
     /// Indicates if the user is subject to COPPA or not.
     /// - parameter isChildDirected: `true` if the user is subject to COPPA, `false` otherwise.
     func setCOPPA(isChildDirected: Bool) {
+        // See https://sdk.yahooinc.com/yahoo-ads/publisher-privacy.html
         if (isChildDirected) {
             YASAds.sharedInstance.applyCoppa()
             log(.privacyUpdated(setting: "COPPA", value: "applied"))
@@ -93,6 +95,7 @@ final class YahooAdapter: PartnerAdapter {
     /// - parameter hasGivenConsent: A boolean indicating if the user has given consent.
     /// - parameter privacyString: An IAB-compliant string indicating the CCPA status.
     func setCCPA(hasGivenConsent: Bool, privacyString: String) {
+        // See https://sdk.yahooinc.com/yahoo-ads/publisher-privacy.html
         YASAds.sharedInstance.add(YASCcpaConsent(consentString: privacyString))
         log(.privacyUpdated(setting: "YASCcpaConsent", value: privacyString))
     }
