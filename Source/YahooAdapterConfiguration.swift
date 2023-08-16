@@ -5,16 +5,21 @@
 
 import Foundation
 import YahooAds
+import os.log
 
 /// A list of externally configurable properties pertaining to the partner SDK that can be retrieved and set by publishers.
 @objc public class YahooAdapterConfiguration: NSObject {
     
+    private static let log = OSLog(subsystem: "com.chartboost.mediation.adapter.yahoo", category: "Configuration")
+
     /// Flag that can optionally be set to enable Yahoo's verbose logging.
     /// Disabled by default.
     @objc public static var verboseLogging: Bool = false {
         didSet {
             YASAds.logLevel = verboseLogging ? .verbose : .info
-            print("Yahoo SDK verbose logging set to \(verboseLogging)")
+            if #available(iOS 12.0, *) {
+                os_log(.debug, log: log, "Yahoo SDK verbose logging set to %{public}s", "\(verboseLogging)")
+            }
         }
     }
 }
