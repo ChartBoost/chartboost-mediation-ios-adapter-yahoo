@@ -114,7 +114,12 @@ final class YahooAdapter: PartnerAdapter {
         case .banner:
             return YahooAdapterBannerAd(adapter: self, request: request, delegate: delegate)
         default:
-            throw error(.loadFailureUnsupportedAdFormat)
+            // Not using the `.adaptiveBanner` case directly to maintain backward compatibility with Chartboost Mediation 4.0
+            if request.format.rawValue == "adaptive_banner" {
+                return YahooAdapterBannerAd(adapter: self, request: request, delegate: delegate)
+            } else {
+                throw error(.loadFailureUnsupportedAdFormat)
+            }
         }
     }
     
