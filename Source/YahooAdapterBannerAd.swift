@@ -29,14 +29,21 @@ final class YahooAdapterBannerAd: YahooAdapterAd, PartnerAd {
             log(.loadFailed(error))
             return completion(.failure(error))
         }
+
+        // Fail if we cannot fit a fixed size banner in the requested size.
+        guard let size = fixedBannerSize(for: request.size ?? IABStandardAdSize) else {
+            let error = error(.loadFailureInvalidBannerSize)
+            log(.loadFailed(error))
+            return completion(.failure(error))
+        }
         
         self.viewController = viewController
         
-        let adSize = YASInlineAdSize(
-            width: UInt(request.size?.width ?? IABStandardAdSize.width),
-            height: UInt(request.size?.height ?? IABStandardAdSize.height)
+        let partnerSize = YASInlineAdSize(
+            width: UInt(size.width),
+            height: UInt(size.height)
         )
-        let config = YASInlinePlacementConfig(placementId: request.partnerPlacement, requestMetadata: nil, adSizes: [adSize])
+        let config = YASInlinePlacementConfig(placementId: request.partnerPlacement, requestMetadata: nil, adSizes: [partnerSize])
         
         guard let ad = YASInlineAdView(placementId: request.partnerPlacement) else {
             let error = error(.loadFailureNoInlineView, description: "Failed to create YASInlineAdView")
@@ -65,7 +72,14 @@ extension YahooAdapterBannerAd: YASInlineAdViewDelegate {
     
     func inlineAdDidLoad(_ inlineAd: YASInlineAdView) {
         log(.loadSucceeded)
-        loadCompletion?(.success([:])) ?? log(.loadResultIgnored)
+
+        var partnerDetails: [String: String] = [:]
+        if let loadedSize = fixedBannerSize(for: request.size ?? IABStandardAdSize) {
+            partnerDetails["bannerWidth"] = "\(loadedSize.width)"
+            partnerDetails["bannerHeight"] = "\(loadedSize.height)"
+            partnerDetails["bannerType"] = "0" // Fixed banner
+        }
+        loadCompletion?(.success(partnerDetails)) ?? log(.loadResultIgnored)
         loadCompletion = nil
     }
     
@@ -114,5 +128,22 @@ extension YahooAdapterBannerAd: YASInlineAdViewDelegate {
     
     func inlineAdDidRefresh(_ inlineAd: YASInlineAdView) {
         log(.delegateCallIgnored)
+    }
+}
+
+// MARK: - Helpers
+extension YahooAdapterBannerAd {
+    private func fixedBannerSize(for requestedSize: CGSize) -> CGSize? {
+        let sizes = [IABLeaderboardAdSize, IABMediumAdSize, IABStandardAdSize]
+        // Find the largest size that can fit in the requested size.
+        for size in sizes {
+            // If height is 0, the pub has requested an ad of any height, so only the width matters.
+            if requestedSize.width >= size.width &&
+                (size.height == 0 || requestedSize.height >= size.height) {
+                return size
+            }
+        }
+        // The requested size cannot fit any fixed size banners.
+        return nil
     }
 }
