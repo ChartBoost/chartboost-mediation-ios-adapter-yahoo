@@ -10,6 +10,7 @@ Pod::Spec.new do |spec|
   # Source
   spec.module_name  = 'ChartboostMediationAdapterYahoo'
   spec.source       = { :git => 'https://github.com/ChartBoost/chartboost-mediation-ios-adapter-yahoo.git', :tag => spec.version }
+  spec.resource_bundles = { 'ChartboostMediationAdapterYahoo' => ['PrivacyInfo.xcprivacy'] }
   spec.source_files = 'Source/**/*.{swift}'
 
   # Minimum supported versions
