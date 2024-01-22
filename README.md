@@ -1,3 +1,12 @@
+**⚠️ DEPRECATED**
+
+---
+
+This partner is no longer supported by Chartboost Mediation. \
+This adapter is now deprecated and will receive no future updates.
+
+---
+
 # Chartboost Mediation Yahoo Adapter
 
 The Chartboost Mediation Yahoo adapter mediates Yahoo via the Chartboost Mediation SDK.
